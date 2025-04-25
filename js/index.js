@@ -228,6 +228,226 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.style.overflow = 'auto';
         }
     });
+     // DOM Elements
+  const tags = document.querySelectorAll('.tag');
+  const cardsContainer = document.getElementById('cardsContainer');
+  const placeholder = document.getElementById('placeholder');
+  const resultCount = document.getElementById('resultCount');
+  const voiceBtn = document.getElementById('voiceSearchBtn');
+  const searchBtn = document.getElementById('searchBtn');
+  const searchInput = document.getElementById('searchInput');
+  const yearFilter = document.getElementById('yearFilter');
+  const teacherFilter = document.getElementById('teacherFilter');
+  const cardTemplate = document.getElementById('pfeCardTemplate');
+  
+  // Speech recognition setup
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let recognition;
+  if (SpeechRecognition) {
+    recognition = new SpeechRecognition();
+    recognition.lang = 'fr-FR';
+    recognition.interimResults = false;
+    
+    recognition.onresult = function(event) {
+      const transcript = event.results[0][0].transcript;
+      searchInput.value = transcript;
+      filterProjects();
+    };
+    
+    recognition.onerror = function(event) {
+      console.error('Speech recognition error', event.error);
+      voiceBtn.classList.remove('active');
+    };
+    
+    recognition.onend = function() {
+      voiceBtn.classList.remove('active');
+    };
+  }
+  
+  // Domain icons and colors
+  const domainIcons = {
+    ai: '<i class="fas fa-robot"></i>',
+    web: '<i class="fas fa-globe"></i>',
+    mobile: '<i class="fas fa-mobile-alt"></i>',
+    iot: '<i class="fas fa-network-wired"></i>',
+    security: '<i class="fas fa-shield-alt"></i>',
+    default: '<i class="fas fa-file-alt"></i>'
+  };
+  
+  const domainColors = {
+    ai: '#3b82f6',
+    web: '#10b981',
+    mobile: '#f59e0b',
+    iot: '#8b5cf6',
+    security: '#ef4444',
+    default: '#9ca3af'
+  };
+  
+  // Sample PFE data
+  const pfeData = {
+    all: [
+      { id: 1, title: "Système de recommandation IA", student: "Ahmed Ben Salah", supervisor: "Dr. Kamel Hamrouni", year: "2023", domain: "ai", abstract: "Développement d'un système de recommandation intelligent pour les plateformes e-commerce." },
+      { id: 2, title: "Application mobile de santé", student: "Sara Mejri", supervisor: "Dr. Nabil Tabbane", year: "2023", domain: "mobile", abstract: "Application iOS/Android pour le suivi des patients atteints de maladies chroniques." },
+      { id: 3, title: "Plateforme e-learning", student: "Mohamed Ali", supervisor: "Dr. Sami Ben Amor", year: "2022", domain: "web", abstract: "Plateforme d'apprentissage en ligne avec intégration de réalité augmentée." },
+      { id: 4, title: "Système domotique intelligent", student: "Karim Ben Mohamed", supervisor: "Dr. Ali Toumi", year: "2022", domain: "iot", abstract: "Contrôle centralisé des appareils domestiques via interface web." },
+      { id: 5, title: "Détection d'intrusion", student: "Amira Chaabouni", supervisor: "Dr. Salem Hasnaoui", year: "2023", domain: "security", abstract: "Système de détection d'anomalies dans les réseaux informatiques." },
+      { id: 6, title: "Analyse prédictive", student: "Houssem Ben Fraj", supervisor: "Dr. Ines Ben Jaafar", year: "2022", domain: "data", abstract: "Modélisation prédictive des performances des étudiants." },
+      { id: 7, title: "Chatbot intelligent", student: "Fatma Karray", supervisor: "Dr. Leila Jemni", year: "2022", domain: "ai", abstract: "Implémentation d'un chatbot conversationnel utilisant le NLP." },
+      { id: 8, title: "Marketplace universitaire", student: "Youssef Ben Ahmed", supervisor: "Dr. Houda Benbrahim", year: "2021", domain: "web", abstract: "Plateforme de vente de matériel pédagogique entre étudiants." }
+    ],
+    ai: [
+      { id: 1, title: "Système de recommandation IA", student: "Ahmed Ben Salah", supervisor: "Dr. Kamel Hamrouni", year: "2023", domain: "ai", abstract: "Développement d'un système de recommandation intelligent pour les plateformes e-commerce." },
+      { id: 7, title: "Chatbot intelligent", student: "Fatma Karray", supervisor: "Dr. Leila Jemni", year: "2022", domain: "ai", abstract: "Implémentation d'un chatbot conversationnel utilisant le NLP." }
+    ],
+    web: [
+      { id: 3, title: "Plateforme e-learning", student: "Mohamed Ali", supervisor: "Dr. Sami Ben Amor", year: "2022", domain: "web", abstract: "Plateforme d'apprentissage en ligne avec intégration de réalité augmentée." },
+      { id: 8, title: "Marketplace universitaire", student: "Youssef Ben Ahmed", supervisor: "Dr. Houda Benbrahim", year: "2021", domain: "web", abstract: "Plateforme de vente de matériel pédagogique entre étudiants." }
+    ],
+    mobile: [
+      { id: 2, title: "Application mobile de santé", student: "Sara Mejri", supervisor: "Dr. Nabil Tabbane", year: "2023", domain: "mobile", abstract: "Application iOS/Android pour le suivi des patients atteints de maladies chroniques." }
+    ],
+    iot: [
+      { id: 4, title: "Système domotique intelligent", student: "Karim Ben Mohamed", supervisor: "Dr. Ali Toumi", year: "2022", domain: "iot", abstract: "Contrôle centralisé des appareils domestiques via interface web." }
+    ],
+    security: [
+      { id: 5, title: "Détection d'intrusion", student: "Amira Chaabouni", supervisor: "Dr. Salem Hasnaoui", year: "2023", domain: "security", abstract: "Système de détection d'anomalies dans les réseaux informatiques." }
+    ]
+  };
+  
+  // Current filter state
+  let currentFilters = {
+    category: 'all',
+    year: 'all',
+    teacher: 'all',
+    searchQuery: ''
+  };
+  
+  // Function to filter projects based on all criteria
+  function filterProjects() {
+    let filteredProjects = [...pfeData[currentFilters.category] || [...pfeData.all]];
+    
+    // Apply year filter
+    if (currentFilters.year !== 'all') {
+      filteredProjects = filteredProjects.filter(project => project.year === currentFilters.year);
+    }
+    
+    // Apply teacher filter
+    if (currentFilters.teacher !== 'all') {
+      filteredProjects = filteredProjects.filter(project => project.supervisor === currentFilters.teacher);
+    }
+    
+    // Apply search query
+    if (currentFilters.searchQuery) {
+      const query = currentFilters.searchQuery.toLowerCase();
+      filteredProjects = filteredProjects.filter(project => 
+        project.title.toLowerCase().includes(query) ||
+        project.student.toLowerCase().includes(query) ||
+        project.supervisor.toLowerCase().includes(query) ||
+        project.abstract.toLowerCase().includes(query)
+      );
+    }
+    
+    renderCards(filteredProjects);
+  }
+  
+  // Function to render PFE cards
+  function renderCards(projects) {
+    // Clear existing cards
+    cardsContainer.innerHTML = '';
+    
+    if (projects.length === 0) {
+      placeholder.style.display = 'flex';
+      resultCount.textContent = '(0)';
+      return;
+    }
+    
+    // Hide placeholder and show cards
+    placeholder.style.display = 'none';
+    resultCount.textContent = `(${projects.length})`;
+    
+    // Create and append cards
+    projects.forEach(project => {
+      const card = cardTemplate.content.cloneNode(true);
+      
+      // Set card content
+      const icon = card.querySelector('.card-icon');
+      icon.innerHTML = domainIcons[project.domain] || domainIcons.default;
+      icon.style.backgroundColor = domainColors[project.domain] || domainColors.default;
+      
+      card.querySelector('.card-title').textContent = project.title;
+      card.querySelector('.card-domain').textContent = project.domain.toUpperCase();
+      card.querySelector('.student').textContent = project.student;
+      card.querySelector('.supervisor').textContent = project.supervisor;
+      card.querySelector('.year').textContent = project.year;
+      card.querySelector('.card-abstract').textContent = project.abstract;
+      
+      cardsContainer.appendChild(card);
+    });
+  }
+  
+  // Handle tag clicks
+  tags.forEach(tag => {
+    tag.addEventListener('click', function() {
+      // Update active state
+      tags.forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      
+      // Update filter and refresh
+      currentFilters.category = this.dataset.category;
+      filterProjects();
+    });
+  });
+  
+  // Handle search input
+  searchBtn.addEventListener('click', function() {
+    currentFilters.searchQuery = searchInput.value.trim();
+    filterProjects();
+  });
+  
+  searchInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      currentFilters.searchQuery = searchInput.value.trim();
+      filterProjects();
+    }
+  });
+  
+  // Handle voice search button
+  voiceBtn.addEventListener('click', function() {
+    if (!recognition) {
+      alert("La reconnaissance vocale n'est pas supportée par votre navigateur");
+      return;
+    }
+    
+    if (this.classList.contains('active')) {
+      recognition.stop();
+      this.classList.remove('active');
+    } else {
+      try {
+        recognition.start();
+        this.classList.add('active');
+        searchInput.placeholder = "Écoute...";
+      } catch (e) {
+        console.error('Speech recognition error:', e);
+        this.classList.remove('active');
+        searchInput.placeholder = "Titre, étudiant, encadrant...";
+      }
+    }
+  });
+  
+  // Handle year filter
+  yearFilter.addEventListener('change', function() {
+    currentFilters.year = this.value;
+    filterProjects();
+  });
+  
+  // Handle teacher filter
+  teacherFilter.addEventListener('change', function() {
+    currentFilters.teacher = this.value;
+    filterProjects();
+  });
+  
+  // Initialize with 'all' category
+  filterProjects();
 });
 
 
