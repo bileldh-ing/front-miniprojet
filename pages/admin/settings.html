@@ -1,281 +1,390 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paramètres - Admin - Plateforme PFE</title>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- Custom CSS -->
+    <title>Settings - Admin Dashboard</title>
     <link rel="stylesheet" href="../../css/design-system.css">
     <link rel="stylesheet" href="../../css/components.css">
     <link rel="stylesheet" href="../../css/animations.css">
-    <link rel="stylesheet" href="../../css/sparkle-button.css">
-    <link rel="stylesheet" href="../../css/card-menu.css">
-    <link rel="stylesheet" href="../../css/notification.css">
-    <link rel="stylesheet" href="../../css/theme-toggle.css">
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="dashboard.html">
-                <img src="../../img/logo.png" alt="PFE Platform Logo" height="40">
-                <span class="ms-2 fw-bold text-primary">PFE Platform</span>
-                <span class="badge bg-danger ms-2">Admin</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="dashboard.html">
-                            <i class="fas fa-tachometer-alt"></i> Tableau de bord
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="users.html">
-                            <i class="fas fa-users"></i> Utilisateurs
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="departments.html">
-                            <i class="fas fa-building"></i> Départements
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="teachers.html">
-                            <i class="fas fa-chalkboard-teacher"></i> Enseignants
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pfe-management.html">
-                            <i class="fas fa-project-diagram"></i> Gestion PFE
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="statistics.html">
-                            <i class="fas fa-chart-bar"></i> Statistiques
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="settings.html">
-                            <i class="fas fa-cog"></i> Paramètres
-                        </a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-user-circle"></i> Admin
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user"></i> Profil</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="../auth/login.html"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <link rel="stylesheet" href="../../css/sidebar.css">
+    <link rel="stylesheet" href="../../css/glass-effect.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+            transition: margin-left 0.3s ease;
+        }
 
-    <!-- Main Content -->
-    <div class="container-fluid mt-5 pt-4">
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="col-lg-3 col-xl-2">
-                <div class="card shadow-sm mb-4">
-                    <div class="card-body p-0">
-                        <div class="list-group list-group-flush">
-                            <a href="settings.html" class="list-group-item list-group-item-action active">
-                                <i class="fas fa-cog me-2"></i> Général
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action">
-                                <i class="fas fa-shield-alt me-2"></i> Sécurité
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action">
-                                <i class="fas fa-bell me-2"></i> Notifications
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action">
-                                <i class="fas fa-database me-2"></i> Sauvegarde
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action">
-                                <i class="fas fa-palette me-2"></i> Apparence
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action">
-                                <i class="fas fa-language me-2"></i> Langue
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action">
-                                <i class="fas fa-info-circle me-2"></i> À propos
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Main Content -->
-            <div class="col-lg-9 col-xl-10">
-                <div class="card shadow-sm mb-4">
-                    <div class="card-header bg-white">
-                        <h5 class="card-title mb-0">Paramètres généraux</h5>
-                    </div>
-                    <div class="card-body">
-                        <form>
-                            <div class="mb-4">
-                                <h6 class="fw-bold">Informations de la plateforme</h6>
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <label for="platformName" class="form-label">Nom de la plateforme</label>
-                                        <input type="text" class="form-control" id="platformName" value="PFE Platform">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="platformEmail" class="form-label">Email de contact</label>
-                                        <input type="email" class="form-control" id="platformEmail" value="contact@pfe-platform.com">
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="platformDescription" class="form-label">Description</label>
-                                        <textarea class="form-control" id="platformDescription" rows="3">Plateforme de gestion des projets de fin d'études pour les établissements d'enseignement supérieur.</textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <h6 class="fw-bold">Paramètres d'affichage</h6>
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <label for="itemsPerPage" class="form-label">Éléments par page</label>
-                                        <select class="form-select" id="itemsPerPage">
-                                            <option value="10">10</option>
-                                            <option value="25" selected>25</option>
-                                            <option value="50">50</option>
-                                            <option value="100">100</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="defaultTheme" class="form-label">Thème par défaut</label>
-                                        <select class="form-select" id="defaultTheme">
-                                            <option value="light" selected>Clair</option>
-                                            <option value="dark">Sombre</option>
-                                            <option value="system">Système</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <h6 class="fw-bold">Paramètres de notification</h6>
-                                <div class="form-check form-switch mb-2">
-                                    <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
-                                    <label class="form-check-label" for="emailNotifications">Notifications par email</label>
-                                </div>
-                                <div class="form-check form-switch mb-2">
-                                    <input class="form-check-input" type="checkbox" id="systemNotifications" checked>
-                                    <label class="form-check-label" for="systemNotifications">Notifications système</label>
-                                </div>
-                                <div class="form-check form-switch mb-2">
-                                    <input class="form-check-input" type="checkbox" id="loginNotifications" checked>
-                                    <label class="form-check-label" for="loginNotifications">Notifications de connexion</label>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <h6 class="fw-bold">Maintenance</h6>
-                                <div class="form-check form-switch mb-2">
-                                    <input class="form-check-input" type="checkbox" id="maintenanceMode">
-                                    <label class="form-check-label" for="maintenanceMode">Mode maintenance</label>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="maintenanceMessage" class="form-label">Message de maintenance</label>
-                                    <textarea class="form-control" id="maintenanceMessage" rows="2">La plateforme est actuellement en maintenance. Veuillez réessayer ultérieurement.</textarea>
-                                </div>
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <button type="button" class="btn btn-warning w-100">
-                                            <i class="fas fa-broom me-2"></i> Vider le cache
-                                        </button>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <button type="button" class="btn btn-danger w-100">
-                                            <i class="fas fa-trash-alt me-2"></i> Vider les logs
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="text-end">
-                                <button type="button" class="btn btn-secondary me-2">Annuler</button>
-                                <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                
-                <div class="card shadow-sm mb-4">
-                    <div class="card-header bg-white">
-                        <h5 class="card-title mb-0">Paramètres avancés</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="mb-4">
-                            <h6 class="fw-bold">Base de données</h6>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <button type="button" class="btn btn-primary w-100">
-                                        <i class="fas fa-download me-2"></i> Exporter la base de données
-                                    </button>
-                                </div>
-                                <div class="col-md-6">
-                                    <button type="button" class="btn btn-warning w-100">
-                                        <i class="fas fa-upload me-2"></i> Importer une sauvegarde
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <h6 class="fw-bold">Système</h6>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <button type="button" class="btn btn-info w-100">
-                                        <i class="fas fa-sync me-2"></i> Vérifier les mises à jour
-                                    </button>
-                                </div>
-                                <div class="col-md-6">
-                                    <button type="button" class="btn btn-success w-100">
-                                        <i class="fas fa-wrench me-2"></i> Optimiser le système
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="alert alert-warning">
-                            <i class="fas fa-exclamation-triangle me-2"></i> Les paramètres avancés sont réservés aux administrateurs expérimentés. Une mauvaise configuration peut entraîner des dysfonctionnements du système.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+        }
+
+        /* Settings Page Styles */
+        .settings-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .settings-header {
+            margin-bottom: 2rem;
+        }
+
+        .settings-header h1 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .settings-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .settings-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .settings-card h2 {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .settings-card h2 i {
+            color: #4CAF50;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.toggle-slider {
+            background-color: #4CAF50;
+        }
+
+        input:checked+.toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        .notification-settings {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .notification-settings:last-child {
+            border-bottom: none;
+        }
+
+        .notification-settings .notification-info {
+            flex: 1;
+        }
+
+        .notification-settings h3 {
+            margin: 0;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .notification-settings p {
+            margin: 0.5rem 0 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar Toggle -->
+    <div class="sidebar-toggle">
+        <i class="fas fa-bars"></i>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer mt-auto py-3 bg-light">
-        <div class="container">
-            <div class="text-center">
-                <span class="text-muted">© 2025 PFE Platform. Tous droits réservés.</span>
+    <!-- Sidebar -->
+    <aside class="sidebar admin-sidebar">
+        <div class="sidebar-header">
+            <img src=".../../img/logo.png" alt="Logo" class="logo">
+            <h2>Admin Panel</h2>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="dashboard.html" class="nav-item">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="departments.html" class="nav-item">
+                        <i class="fas fa-building"></i>
+                        <span>Departments</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="pfe-management.html" class="nav-item">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>PFE Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="users.html" class="nav-item">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="teachers.html" class="nav-item">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <span>Teachers</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="statistics.html" class="nav-item">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Statistics</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="profile.html" class="nav-item">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="settings.html" class="nav-item">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <img src="../../assets/images/admin-avatar.jpg" alt="Admin" class="avatar">
+                <div class="user-info">
+                    <h4>Admin User</h4>
+                    <p>Administrator</p>
+                </div>
             </div>
         </div>
-    </footer>
+    </aside>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Custom JS -->
-    <script src="../../js/ui-components.js"></script>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="settings-container">
+            <div class="settings-header">
+                <h1>Settings</h1>
+                <p>Manage your system preferences and configurations</p>
+            </div>
+
+            <div class="settings-grid">
+                <!-- General Settings -->
+                <div class="settings-card">
+                    <h2><i class="fas fa-sliders-h"></i> General Settings</h2>
+                    <form id="generalSettingsForm">
+                        <div class="form-group">
+                            <label for="siteName">Site Name</label>
+                            <input type="text" id="siteName" value="PFE Management System">
+                        </div>
+                        <div class="form-group">
+                            <label for="adminEmail">Admin Email</label>
+                            <input type="email" id="adminEmail" value="admin@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="timezone">Timezone</label>
+                            <select id="timezone">
+                                <option value="UTC">UTC</option>
+                                <option value="EST">Eastern Time</option>
+                                <option value="PST">Pacific Time</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-save">Save Changes</button>
+                    </form>
+                </div>
+
+                <!-- Notification Settings -->
+                <div class="settings-card">
+                    <h2><i class="fas fa-bell"></i> Notification Settings</h2>
+                    <div class="notification-settings">
+                        <div class="notification-info">
+                            <h3>Email Notifications</h3>
+                            <p>Receive email updates about system activities</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="notification-settings">
+                        <div class="notification-info">
+                            <h3>PFE Updates</h3>
+                            <p>Get notified about PFE status changes</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="notification-settings">
+                        <div class="notification-info">
+                            <h3>User Activities</h3>
+                            <p>Receive updates about user actions</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Security Settings -->
+                <div class="settings-card">
+                    <h2><i class="fas fa-shield-alt"></i> Security Settings</h2>
+                    <form id="securitySettingsForm">
+                        <div class="form-group">
+                            <label for="currentPassword">Current Password</label>
+                            <input type="password" id="currentPassword">
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">New Password</label>
+                            <input type="password" id="newPassword">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm New Password</label>
+                            <input type="password" id="confirmPassword">
+                        </div>
+                        <button type="submit" class="btn-save">Update Password</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="../../js/sidebar.js"></script>
+    <script>
+        // Initialize sidebar
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebarManager = new SidebarManager();
+            sidebarManager.initialize();
+
+            // Form submission handlers
+            document.getElementById('generalSettingsForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                // Add your form submission logic here
+                alert('General settings saved successfully!');
+            });
+
+            document.getElementById('securitySettingsForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                // Add your password update logic here
+                alert('Password updated successfully!');
+            });
+        });
+    </script>
 </body>
+
 </html>
